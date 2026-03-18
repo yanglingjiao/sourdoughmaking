@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欧包架构师 Pro - 专家级流程管理</title>
+    <style>
+        :root { --primary: #5d4037; --accent: #8d6e63; --bg: #fdfbf7; }
+        body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: #333; padding: 20px; line-height: 1.8; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h1, h2, h3 { color: var(--primary); text-align: center; }
+        .config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .input-group { display: flex; flex-direction: column; }
+        label { font-weight: 600; margin-bottom: 8px; font-size: 0.9em; color: var(--accent); }
+        input, select { padding: 12px; border: 1.5px solid #eee; border-radius: 10px; font-size: 16px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--accent); }
+        .btn-main { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        #output { display: none; margin-top: 30px; }
+        .recipe-card { background: #f9f6f2; padding: 20px; border-radius: 15px; border-left: 5px solid var(--primary); margin-bottom: 25px; }
+        .process-step { margin-bottom: 30px; padding-left: 15px; border-left: 2px solid #eee; }
+        .step-header { font-weight: bold; font-size: 1.1em; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .step-header span { background: var(--primary); color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 0.8em; }
+        .sub-step { margin: 10px 0 10px 25px; background: #fff; padding: 10px; border-radius: 8px; font-size: 0.95em; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .highlight { color: #b71c1c; font-weight: bold; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: 0.8em; margin-right: 5px; }
+        .badge-temp { background: #e3f2fd; color: #1976d2; }
+        .badge-time { background: #f3e5f5; color: #7b1fa2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍞 欧包架构师 Pro</h1>
+        <div class="config-grid">
+            <div class="input-group">
+                <label>目标面粉总量 (g)</label>
+                <input type="number" id="totalFlour" value="200">
+            </div>
+            <div class="input-group">
+                <label>面粉类型</label>
+                <select id="flourType">
+                    <option value="high">T65 / 高筋面包粉 (80%+ 水)</option>
+                    <option value="medium">T55 / 中筋粉 (70%-75% 水)</option>
+                    <option value="rye">黑麦/全麦混合 (定制吸水)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>发酵方式</label>
+                <select id="proofType">
+                    <option value="cold">冷藏长期发酵 (风味导向)</option>
+                    <option value="room">常温快速发酵 (效率导向)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>环境季节</label>
+                <select id="season">
+                    <option value="summer">夏季 (控温模式)</option>
+                    <option value="winter">冬季 (催化模式)</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn-main" onclick="generateExpertPlan()">构建生产方案</button>
+
+        <div id="output">
+            <div id="recipeResult" class="recipe-card"></div>
+            <div id="processResult"></div>
+        </div>
+    </div>
+
+    <script>
+        function generateExpertPlan() {
+            const totalFlour = parseFloat(document.getElementById('totalFlour').value);
+            const flourType = document.getElementById('flourType').value;
+            const proofType = document.getElementById('proofType').value;
+            const season = document.getElementById('season').value;
+
+            // 1. 算法：精准含水量与硬种转化
+            const hydrations = { high: 0.82, medium: 0.72, rye: 0.75 };
+            const hydration = hydrations[flourType];
+            const starterRatio = (season === 'summer') ? 0.15 : 0.25; // 提高基础比例以应对硬种动力
+            
+            const salt = totalFlour * 0.02;
+            const starterTotal = totalFlour * starterRatio;
+            const starterFlour = starterTotal / 1.5; // 50%含水硬种比例
+            const starterWater = starterTotal - starterFlour;
+            
+            const mainFlour = totalFlour - starterFlour;
+            const mainWater = (totalFlour * hydration) - starterWater;
+
+            // 2. 渲染配方
+            document.getElementById('recipeResult').innerHTML = `
+                <h3>📊 专家配方 (Baker's Percentages)</h3>
+                <p>目标含水量: <span class="highlight">${(hydration*100).toFixed(0)}%</span> | 盐量: 2%</p>
+                <hr>
+                <p><strong>硬种 (Stiff Starter):</strong> ${starterTotal.toFixed(1)}g <small>(粉:${starterFlour.toFixed(1)} / 水:${starterWater.toFixed(1)})</small></p>
+                <p><strong>主面粉 (Main Flour):</strong> ${mainFlour.toFixed(1)}g</p>
+                <p><strong>主加水 (Main Water):</strong> ${mainWater.toFixed(1)}g</p>
+                <p><strong>海盐 (Salt):</strong> ${salt.toFixed(1)}g</p>
+            `;
+
+            // 3. 生成动态流程
+            const steps = [
+                {
+                    title: "酵种准备 (Levain Build)",
+                    content: `使用 1:2:1 比例（老酵头:粉:水）构建硬种。目标是获得更强的酵母张力和更少的酸度降解。在 26°C 环境下发酵至体积 2.5 倍大，且顶端呈圆拱状。 [cite: 76-85]`
+                },
+                {
+                    title: "水解与混合 (Autolyse & Mix)",
+                    content: `将主粉与主加水混合至无干粉。${flourType==='high'?'建议水解 60 分钟以软化强韧面筋。':'水解 30 分钟即可。'} 之后加入硬种剪碎混匀，最后加入盐。 [cite: 73, 88-91]`
+                },
+                {
+                    title: "面筋强化 (Dough Development)",
+                    content: `进行 3-5 分钟的 Rubaud 混合法，直至面团产生初级弹性。静置 30 分钟。 [cite: 91-93]`
+                },
+                {
+                    title: "一发 (Bulk Fermentation)",
+                    content: `<span class="badge badge-temp">目标面温: 24-26°C</span> 期间进行 3 次 Stretch & Fold。如果是高含水面团，前两次改为 Coil Fold 以增强核心张力。 [cite: 14, 112-115]`
+                },
+                {
+                    title: "判定与预整形 (Probe & Pre-shape)",
+                    content: `观察采样瓶，体积增加约 50-70% 时进行预整形。面团翻转至台面，轻度收紧成圆。静置 20 分钟进行松弛。 [cite: 97-101, 110]`
+                },
+                {
+                    title: "二发策略 (Final Proofing)",
+                    content: proofType === 'cold' ? 
+                        `<b>冷藏模式：</b> 整形入篮后常温放置 30 分钟激发酵母，随后进入 4°C 冰箱冷藏 12-18 小时。此法产酸风味浓郁，且表皮易产生鱼子酱般的泡泡。 [cite: 120-121]` : 
+                        `<b>常温模式：</b> 整形后在 25°C 环境放置 1.5-3 小时。使用指压测试：按下后缓慢回弹一半即为最佳时机。 [cite: 119, 123-126]`
+                },
+                {
+                    title: "割包与热力控制 (Scoring & Baking)",
+                    content: `<span class="badge badge-temp">预热: 250°C</span> 割刀与面团呈 45° 夹角，深约 1cm。前 20 分钟保持高湿度（石板+产汽盘），随后降温至 220°C 开启热风排除水汽，烘至深琥珀色。 [cite: 136-146, 152-155]`
+                }
+            ];
+
+            let html = "<h3>🛠️ 生产级执行流程</h3>";
+            steps.forEach((s, i) => {
+                html += `
+                    <div class="process-step">
+                        <div class="step-header"><span>${i+1}</span> ${s.title}</div>
+                        <div class="sub-step">${s.content}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('processResult').innerHTML = html;
+            document.getElementById('output').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('output').offsetTop, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

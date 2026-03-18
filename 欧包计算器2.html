@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欧包架构师 v6.0 - 专家级全流程控制</title>
+    <style>
+        :root { --master-brown: #5d4037; --flour-white: #fdfbf7; --action-gold: #8d6e63; }
+        body { font-family: "PingFang SC", system-ui; background: var(--flour-white); color: #333; padding: 20px; line-height: 1.6; }
+        .card { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .group { display: flex; flex-direction: column; }
+        label { font-weight: bold; margin-bottom: 8px; color: var(--master-brown); font-size: 0.95em; }
+        input, select { padding: 12px; border: 1.5px solid #eee; border-radius: 10px; font-size: 16px; transition: 0.3s; }
+        input:focus { border-color: var(--action-gold); }
+        .btn-exe { width: 100%; padding: 16px; background: var(--master-brown); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-exe:hover { background: #452e27; }
+        #output { display: none; margin-top: 30px; }
+        .recipe-box { background: #f9f6f2; padding: 25px; border-radius: 15px; border-left: 6px solid var(--master-brown); margin-bottom: 20px; }
+        .step-card { margin-top: 15px; padding: 18px; background: #fff; border: 1px solid #f0f0f0; border-radius: 10px; }
+        .step-title { font-weight: bold; color: var(--master-brown); font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .step-title::before { content: "◈"; margin-right: 10px; color: var(--action-gold); }
+        .highlight-red { color: #b71c1c; font-weight: bold; }
+        .badge { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.85em; margin-bottom: 5px; }
+        .badge-summer { background: #fff3e0; color: #e65100; border: 1px solid #ffccbc; }
+        .badge-winter { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+        .info-tag { font-size: 0.85em; color: #666; margin-top: 4px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🍞 欧包架构师 v6.0</h1>
+        <div class="input-grid">
+            <div class="group">
+                <label>目标粉总量 (g)</label>
+                <input type="number" id="totalFlour" value="1000">
+            </div>
+            <div class="group">
+                <label>含水量等级 (业内标准)</label>
+                <select id="hydroLevel">
+                    <option value="0.70">标准 (70% - 基础稳定型)</option>
+                    <option value="0.78" selected>高粉 (78% - 进阶大孔型)</option>
+                    <option value="0.85">极高 (85% - 挑战极限型)</option>
+                </select>
+            </div>
+            <div class="group">
+                <label>季节环境 (影响酵母比例)</label>
+                <select id="season">
+                    <option value="summer">夏季 (10% 酵头 - 慢发酵控酸)</option>
+                    <option value="winter">冬季 (20% 酵头 - 强化热力驱动)</option>
+                </select>
+            </div>
+            <div class="group">
+                <label>二发方式</label>
+                <select id="proofStrategy">
+                    <option value="cold">长效冷藏 (12-24h 熟化)</option>
+                    <option value="room">即时常温 (4-6h 烘焙)</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn-exe" onclick="generateExpertPlan()">生成定制化生产方案</button>
+
+        <div id="output">
+            <div id="recipeArea" class="recipe-box"></div>
+            <div id="processArea"></div>
+        </div>
+    </div>
+
+    <script>
+        function generateExpertPlan() {
+            const totalFlour = parseFloat(document.getElementById('totalFlour').value);
+            const hydro = parseFloat(document.getElementById('hydroLevel').value);
+            const season = document.getElementById('season').value;
+            const proof = document.getElementById('proofStrategy').value;
+
+            // 1. 季节性酵母策略逻辑
+            const starterRatio = (season === 'summer') ? 0.10 : 0.20;
+            const starterWeight = totalFlour * starterRatio;
+            
+            // 2. 85.3% 集成算法：粉水分离计算 (50%硬种)
+            const levainFlour = starterWeight / 1.5;
+            const levainWater = starterWeight - levainFlour;
+            const salt = totalFlour * 0.02;
+            const totalWater = totalFlour * hydro;
+            
+            // 后加水(Bassinage)预留逻辑
+            const reserveWaterRatio = hydro >= 0.85 ? 0.15 : (hydro >= 0.78 ? 0.10 : 0.05);
+            const reserveWater = totalWater * reserveWaterRatio;
+            const autolyseWater = totalWater - levainWater - reserveWater;
+            const mainFlour = totalFlour - levainFlour;
+
+            // 3. 渲染配方
+            const seasonBadge = season === 'summer' ? '<span class="badge badge-summer">夏季控温模式</span>' : '<span class="badge badge-winter">冬季催化模式</span>';
+            document.getElementById('recipeArea').innerHTML = `
+                ${seasonBadge}
+                <h3>📊 专家配方 (含水目标: ${(hydro*100).toFixed(1)}%)</h3>
+                <p><b>① 硬种 (Stiff Starter):</b> ${starterWeight.toFixed(1)}g <br>
+                   <span class="info-tag">(由 ${levainFlour.toFixed(1)}g 粉 + ${levainWater.toFixed(1)}g 水构建)</span></p>
+                <p><b>② 水解 (Autolyse):</b> 粉:${mainFlour.toFixed(1)}g | 水:<span class="highlight-red">${autolyseWater.toFixed(1)}g</span></p>
+                <p><b>③ 混合 (Final Mix):</b> 盐:${salt.toFixed(1)}g | <b>后加水(Bassinage): <span class="highlight-red">${reserveWater.toFixed(1)}g</span></b></p>
+            `;
+
+            // 4. 生成定制步骤流程
+            let flowHtml = "<h3>🛠️ 生产全流程指令 (从准备到烘烤)</h3>";
+            const steps = [
+                {
+                    t: "准备与喂养 (Initialization)",
+                    c: `根据${season==='summer'?'夏季':'冬季'}策略，构建硬种。确保含水量 50%。硬种可有效降低面筋降解速率。`
+                },
+                {
+                    t: "混合水解 (Autolyse)",
+                    c: `将主粉与 ${autolyseWater.toFixed(1)}g 水混合，静置 60 分钟。此时不要放盐和酵头。`
+                },
+                {
+                    t: "建立面筋 (Initial Kneading)",
+                    c: `加入剪碎的硬种。${hydro >= 0.8 ? '<b>Rubaud法：</b>高含水面团需通过手部像螺旋桨一样搅拌，引入空气并初步强化连接。' : '<b>常规揉面：</b>揉至面团离盆。'}`
+                },
+                {
+                    t: "分段补水与加盐 (Bassinage & Salt)",
+                    c: `分次加入剩余的 ${reserveWater.toFixed(1)}g 水和盐。盐能通过电荷作用紧致面筋纤维。`
+                },
+                {
+                    t: "一发强化 (Bulk Fermentation)",
+                    c: hydro >= 0.85 ? 
+                       "<b>Coil Fold (线圈折叠)：</b>每 30 分钟进行一次，共 4-6 次。不要拉伸过快，防止断裂。" : 
+                       "<b>Stretch & Fold (拉伸折叠)：</b>每 45 分钟一次，共 3 次，建立足够的支撑力。"
+                },
+                {
+                    t: "二发策略 (Final Proofing)",
+                    c: proof === 'cold' ? 
+                       "<b>长效冷藏：</b>整形后室温静置 30 分钟激发。放入 4°C 冰箱 12-18 小时。冷藏能增加风味且极大方便割包。" : 
+                       "<b>常温快发：</b>在 26°C 环境下发酵 3-5 小时。指压测试回弹缓慢即为成熟。"
+                },
+                {
+                    t: "割包与烘烤 (Scoring & Baking)",
+                    c: `预热至 250°C。割包深度 1cm，角度 45°。${hydro >= 0.85 ? '<b>注意：</b>高含水面团入炉前极易摊平，必须配合强力蒸汽支持 Oven Spring。' : ''}`
+                }
+            ];
+
+            steps.forEach(s => {
+                flowHtml += `<div class="step-card"><div class="step-title">${s.t}</div><div>${s.c}</div></div>`;
+            });
+
+            document.getElementById('processArea').innerHTML = flowHtml;
+            document.getElementById('output').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('output').offsetTop, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

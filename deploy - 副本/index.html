@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欧包制作参考 -含知识库版</title>
+    <style>
+        :root {
+            --primary: #f4683e;
+            --accent: #8d6e63;
+            --bg: #fdfbf7;
+            --success: #2e7d32;
+            --warning: #f4c6d0;
+            --info: #1976d2;
+            --back: #e3f2fd;
+            --black: #333;
+            --pink: #f4c6d0
+        }
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: var(--bg);
+            color: #333;
+    
+            padding: 20px;
+            line-height: 1.7;
+            background-color: var(--back);
+            /* background-image: url('../image/02.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat; */
+        
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            background-color: var(--pink);
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        
+        }
+        h1, h2, h3 { color: var(--black); text-align: center; }
+        .header-subtitle { text-align: center; color: #15417f; font-size: 0.9em; margin-bottom: 20px; }
+
+        /* 标签页导航 */
+        .tab-container {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        .tab-btn:hover { color: var(--primary); background: #f9f6f2; }
+        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 25px; }
+        .input-group { display: flex; flex-direction: column; }
+        label { font-weight: 600; margin-bottom: 8px; font-size: 0.9em; color: var(--black); }
+        input, select {
+            padding: 12px;
+            border: 1.5px solid #eee;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(141, 110, 99, 0.1); }
+
+        .btn-main {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--pink), var(--back));
+            color: var(--black);
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(93, 64, 55, 0.3);
+        }
+        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(93, 64, 55, 0.4); }
+
+        #output { display: none; margin-top: 30px; animation: fadeIn 0.5s; }
+
+        .recipe-card {
+            background: linear-gradient(135deg, #f9f6f2, #f5f0e8);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 6px solid var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .process-step { margin-bottom: 25px; padding-left: 20px; border-left: 3px solid #eee; }
+        .step-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .step-number {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .sub-step {
+            margin: 12px 0 12px 30px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #f5f5f5;
+        }
+
+        .highlight { color: #b71c1c; font-weight: bold; }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.8em; margin-right: 8px; margin-bottom: 5px; }
+        .badge-temp { background: #e3f2fd; color: #1976d2; border: 1px solid #bbdefb; }
+        .badge-time { background: #f3e5f5; color: #7b1fa2; border: 1px solid #e1bee7; }
+        .badge-season { background: #fff3e0; color: #e65100; border: 1px solid #ffccbc; }
+
+        .tip-box {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid var(--success);
+        }
+        .warning-box {
+            background: #fff8e1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid var(--warning);
+            font-size: 0.9em;
+        }
+
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+        .stat-item { text-align: center; padding: 10px; background: white; border-radius: 8px; }
+        .stat-value { font-size: 1.2em; font-weight: bold; color: var(--primary); }
+        .stat-label { font-size: 0.8em; color: #666; }
+
+        /* 知识库问答样式 */
+        .qa-section { margin-top: 40px; border-top: 2px solid #eee; padding-top: 30px; }
+        .qa-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .qa-icon { font-size: 2em; }
+        .qa-input-container { display: flex; gap: 10px; margin-bottom: 20px; }
+        .qa-input { flex: 1; }
+        .btn-qa {
+            padding: 12px 24px;
+            background: var(--back);
+            color: var(--black);
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-qa:hover { background: var(--accent); }
+        .qa-result {
+            background: #f9f6f2;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid var(--pink);
+            display: none;
+        }
+        .qa-result h4 { color: var(--primary); margin-bottom: 10px; }
+        .qa-result .answer-content { line-height: 1.8; }
+        .qa-result .source { font-size: 0.85em; color: #666; margin-top: 15px; padding-top: 10px; border-top: 1px dashed #ddd; }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--back);
+            display: none;
+        }
+        .loading::after {
+            content: "正在搜索知识库...";
+            animation: dots 1.5s infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: "正在搜索知识库."; }
+            40% { content: "正在搜索知识库.."; }
+            60%, 100% { content: "正在搜索知识库..."; }
+        }
+
+        /* 知识库浏览样式 */
+        .kb-browser { margin-top: 20px; }
+        .kb-category {
+            background: #f9f6f2;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .kb-category-header {
+            background: linear-gradient(135deg, var(--pink), var(--back));
+            border: #999;
+            color: var(--black);
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .kb-category-header:hover { opacity: 0.95; }
+        .kb-category-content {
+            padding: 20px;
+            display: none;
+        }
+        .kb-category-content.show { display: block; }
+        .kb-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent);
+        }
+        .kb-item-title { font-weight: bold; color: var(--primary); margin-bottom: 8px; }
+        .kb-item-content { font-size: 0.95em; color: #555; line-height: 1.6; }
+        .kb-tags {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .kb-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .search-stats {
+            background: #e3f2fd;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #1976d2;
+        }
+
+        @media (max-width: 600px) {
+            .config-grid { grid-template-columns: 1fr; }
+            .stat-grid { grid-template-columns: 1fr; }
+            .tab-btn { padding: 12px 10px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍞 一起撸包 </h1>
+        <p class="header-subtitle">知识库版</p>
+
+        <!-- 标签页导航 -->
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('calculator')">📐 配方计算器</button>
+            <button class="tab-btn" onclick="switchTab('qa')">🤖 智能问答</button>
+            <button class="tab-btn" onclick="switchTab('knowledge')">📚 知识库浏览</button>
+        </div>
+
+        <!-- 计算器标签页 -->
+        <div id="calculator-tab" class="tab-content active">
+            <div class="config-grid">
+                <div class="input-group">
+                    <label>目标面粉总量 (g)</label>
+                    <input type="number" id="totalFlour" value="200">
+                    <small style="color: #15417f; font-size: 0.8em;">推荐：200g / 500g / 1000g</small>
+                </div>
+                <div class="input-group">
+                    <label>面粉类型</label>
+                    <select id="flourType">
+                        <option value="high">T65 / 高筋面包粉 (80%+ 水)</option>
+                        <option value="medium">T55 / 中筋粉 (70%-75% 水)</option>
+                        <option value="rye">黑麦/全麦混合 (定制吸水)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>环境季节 (影响酵母比例)</label>
+                    <select id="season">
+                        <option value="summer">夏季 (15% 酵头 - 慢发酵控酸)</option>
+                        <option value="winter">冬季 (25% 酵头 - 强化热力驱动)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>发酵方式</label>
+                    <select id="proofType">
+                        <option value="cold">冷藏长期发酵 (风味导向)</option>
+                        <option value="room">常温快速发酵 (效率导向)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>二发策略</label>
+                    <select id="proofStrategy">
+                        <option value="cold">长效冷藏 (12-18h 熟化)</option>
+                        <option value="room">即时常温 (1.5-3h 烘焙)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn-main" onclick="generateExpertPlan()">🚀 生成撸包方案</button>
+
+            <div id="output">
+                <div id="recipeResult" class="recipe-card"></div>
+                <div id="processResult"></div>
+            </div>
+        </div>
+
+        <!-- 智能问答标签页 -->
+        <div id="qa-tab" class="tab-content">
+            <div class="qa-header">
+                <span class="qa-icon">🤖</span>
+                <h2>知识库智能问答</h2>
+            </div>
+            <p style="color: #666; margin-bottom: 20px;">基于您的烘焙知识库，随时提问任何关于欧包制作的问题！</p>
+
+            <div class="qa-input-container">
+                <input type="text" id="qaQuestion" class="qa-input" placeholder="例如：如何制作完美的酸种？什么是一发？..." onkeypress="handleEnter(event)">
+                <button class="btn-qa" onclick="askQuestion()">🔍 提问</button>
+            </div>
+
+            <div id="qaLoading" class="loading"></div>
+            <div id="qaResult" class="qa-result"></div>
+
+            <div style="margin-top: 15px;">
+                <small style="color: #0a335a;">💡 热门问题：</small>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                    <button class="btn-qa" style="padding: 6px 12px; font-size: 0.9em;" onclick="quickQuestion('如何制作硬种？')">硬种制作</button>
+                    <button class="btn-qa" style="padding: 6px 12px; font-size: 0.9em;" onclick="quickQuestion('什么是水解？')">水解作用</button>
+                    <button class="btn-qa" style="padding: 6px 12px; font-size: 0.9em;" onclick="quickQuestion('如何判断发酵程度？')">发酵判断</button>
+                    <button class="btn-qa" style="padding: 6px 12px; font-size: 0.9em;" onclick="quickQuestion('什么是Coil Fold？')">折叠技巧</button>
+                    <button class="btn-qa" style="padding: 6px 12px; font-size: 0.9em;" onclick="quickQuestion('如何割包？')">割包技巧</button>
+                    <button class="btn-qa" style="padding: 6px 12px; font-size: 0.9em;" onclick="quickQuestion('开放式组织如何形成？')">开放式组织</button>
+                    <button class="btn-qa" style="padding: 6px 12px; font-size: 0.9em;" onclick="quickQuestion('什么是Bassinage？')">后加水技术</button>
+                    <button class="btn-qa" style="padding: 6px 12px; font-size: 0.9em;" onclick="quickQuestion('如何提升风味？')">风味提升</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 知识库浏览标签页 -->
+        <div id="knowledge-tab" class="tab-content">
+            <div class="qa-header">
+                <span class="qa-icon">📚</span>
+                <h2>知识库浏览</h2>
+            </div>
+            <p style="color: #666; margin-bottom: 20px;">按类别浏览完整的烘焙知识库内容</p>
+            <div class="kb-browser" id="kbBrowser"></div>
+        </div>
+    </div>
+
+    <script>
+        // 标签页切换
+        function switchTab(tabName) {
+            // 隐藏所有标签内容
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            // 显示选中的标签
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+
+            // 如果切换到知识库浏览页，初始化知识库
+            if (tabName === 'knowledge') {
+                initKnowledgeBase();
+            }
+        }
+
+        // 计算器功能
+        function generateExpertPlan() {
+            const totalFlour = parseFloat(document.getElementById('totalFlour').value);
+            const flourType = document.getElementById('flourType').value;
+            const season = document.getElementById('season').value;
+            const proofType = document.getElementById('proofType').value;
+            const proofStrategy = document.getElementById('proofStrategy').value;
+
+            // 1. 根据面粉类型确定含水量
+            const hydrations = { high: 0.82, medium: 0.72, rye: 0.75 };
+            let hydration = hydrations[flourType];
+
+            // 2. 季节性酵母策略（硬种模式）
+            const starterRatio = (season === 'summer') ? 0.15 : 0.25;
+            const saltRatio = 0.02;
+
+            const starterWeight = totalFlour * starterRatio;
+            const starterFlour = starterWeight / 1.5;
+            const starterWater = starterWeight - starterFlour;
+
+            const mainFlour = totalFlour - starterFlour;
+            const totalWater = totalFlour * hydration;
+            const salt = totalFlour * saltRatio;
+
+            // 3. Bassinage 后加水技术
+            const reserveWaterRatio = hydration >= 0.80 ? 0.10 : 0.05;
+            const reserveWater = totalWater * reserveWaterRatio;
+            const autolyseWater = totalWater - starterWater - reserveWater;
+
+            // 4. 渲染配方卡片
+            const seasonBadge = season === 'summer' ?
+                '<span class="badge badge-season">🌞 夏季控温模式</span>' :
+                '<span class="badge badge-season">❄️ 冬季催化模式</span>';
+
+            document.getElementById('recipeResult').innerHTML = `
+                ${seasonBadge}
+                <h3>📊 专家配方 (含水目标: ${(hydration*100).toFixed(1)}%)</h3>
+
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">${starterWeight.toFixed(1)}g</div>
+                        <div class="stat-label">硬种 (50%水)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${mainFlour.toFixed(1)}g</div>
+                        <div class="stat-label">主面粉</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${(totalWater).toFixed(1)}g</div>
+                        <div class="stat-label">总水量</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <p><b>🔹 硬种构建:</b> ${starterFlour.toFixed(1)}g 粉 + ${starterWater.toFixed(1)}g 水</p>
+                    <p><b>🔹 水解阶段:</b> ${mainFlour.toFixed(1)}g 粉 + <span class="highlight">${autolyseWater.toFixed(1)}g</span> 水</p>
+                    <p><b>🔹 混合阶段:</b> ${salt.toFixed(1)}g 盐 + <b>后加水 <span class="highlight">${reserveWater.toFixed(1)}g</span></b></p>
+                </div>
+
+                ${hydration >= 0.82 ? `
+                <div class="warning-box">
+                    ⚠️ <b>高含水面团警告:</b> ${(hydration*100).toFixed(0)}%含水量属于挑战级，建议使用Coil Fold折叠法，且必须配合强力蒸汽！
+                </div>
+                ` : ''}
+
+                <div class="tip-box">
+                    <strong>💡 大师要点:</strong><br>
+                    • 硬种含水量固定50%，可有效降低面筋降解速率<br>
+                    • 后加水(Bassinage)技术能更好地建立面筋网络<br>
+                    • 盐通过电荷作用紧致面筋纤维，延后加入更佳
+                </div>
+            `;
+
+            // 5. 生成动态流程
+            const steps = [
+                {
+                    title: "酵种准备",
+                    content: `使用 <b>1:2:1</b> 比例（老酵头:粉:水）构建50%含水硬种。在 ${season === 'summer' ? '24-26°C' : '26-28°C'} 环境下发酵至体积 <b>2.5倍</b>，顶端呈圆拱状。此法能获得更强酵母张力和更少酸度降解。`
+                },
+                {
+                    title: "水解",
+                    content: `将主粉(${mainFlour.toFixed(1)}g)与水解水(${autolyseWater.toFixed(1)}g)混合至无干粉。${flourType === 'high' ? '<b>建议水解60分钟</b>以软化强韧面筋。' : '水解30分钟即可。'} 此时<b>不要放盐和酵头</b>。`
+                },
+                {
+                    title: "建立面筋",
+                    content: `加入剪碎的硬种混匀。${hydration >= 0.80 ?
+                        '<b>Rubaud法：</b>高含水面团需通过手部像螺旋桨一样搅拌，引入空气并初步强化连接，避免过度拉伸导致断裂。' :
+                        '<b>常规揉面：</b>揉至面团产生初级弹性，能够离盆即可。'}`
+                },
+                {
+                    title: "分段补水与加盐",
+                    content: `分次加入后加水(${reserveWater.toFixed(1)}g)和盐(${salt.toFixed(1)}g)。每加一次水都要等完全吸收再加下一次。盐能通过电荷作用紧致面筋纤维，延后加入可避免过早抑制酵母活性。`
+                },
+                {
+                    title: "一发强化",
+                    content: `<span class="badge badge-temp">目标面温: 24-26°C</span> 期间进行 <b>${hydration >= 0.80 ? '4-6次 Coil Fold (线圈折叠)' : '3次 Stretch & Fold (拉伸折叠)'}</b>。${hydration >= 0.80 ?
+                        '<b>Coil Fold技巧：</b>双手插入面团底部，轻轻托起向上翻折。每30分钟一次，不要拉伸过快，防止面筋断裂。' :
+                        '<b>Stretch & Fold技巧：</b>从上下左右四个方向拉伸折叠，每次间隔45分钟，建立足够支撑力。'}`
+                },
+                {
+                    title: "判定与预整形",
+                    content: `观察采样瓶，体积增加约 <b>50-70%</b> 时进行预整形。面团翻转至台面，轻度收紧成圆。静置 <b>20分钟</b> 进行松弛（Benched），便于后续整形。`
+                },
+                {
+                    title: "二发策略",
+                    content: proofStrategy === 'cold' ?
+                        `<b>🧊 冷藏模式：</b> 整形入篮后常温放置30分钟激发酵母，随后进入<b>4°C冰箱冷藏12-18小时</b>。此法产酸风味浓郁，且表皮易产生鱼子酱般的泡泡，极大方便割包。` :
+                        `<b>🏠 常温模式：</b> 整形后在 <span class="badge badge-temp">25°C</span> 环境放置 <b>1.5-3小时</b>。使用<b>指压测试</b>：按下后缓慢回弹一半即为最佳时机。`
+                },
+                {
+                    title: "割包与烘烤",
+                    content: `<span class="badge badge-temp">预热: 250°C</span> 割刀与面团呈45°夹角，深约1cm。前20分钟保持<b>高湿度</b>（石板+产汽盘），随后降温至220°C开启热风排除水汽，烘至深琥珀色。${hydration >= 0.80 ?
+                        '<br><br><b>⚠️ 高含水面团特别提醒:</b> 入炉前极易摊平，必须配合强力蒸汽支持Oven Spring！' : ''}`
+                }
+            ];
+
+            let html = "<h3>🛠️ 生产级执行流程</h3>";
+            steps.forEach((s, i) => {
+                html += `
+                    <div class="process-step">
+                        <div class="step-header">
+                            <div class="step-number">${i+1}</div>
+                            ${s.title}
+                        </div>
+                        <div class="sub-step">${s.content}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('processResult').innerHTML = html;
+            document.getElementById('output').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('output').offsetTop, behavior: 'smooth' });
+        }
+
+        // 扩展的本地知识库数据
+        const localKnowledgeBase = {
+            // 酵种相关
+            '硬种': {
+                keywords: ['硬种', 'stiff starter', 'starter', '酵种', '酸种', 'starter'],
+                category: '酵种',
+                title: '硬种（Stiff Starter）制作详解',
+                content: `硬种是含水量50%的酸种，相比液种更能保护面筋结构。<br><br>
+                    <b>制作要点：</b><br>
+                    • 比例：老酵头:粉:水 = 1:2:1<br>
+                    • 发酵温度：26-28°C<br>
+                    • 发酵时间：至体积2.5倍，顶端呈圆拱状<br>
+                    • 优势：降低面筋降解速率，获得更强酵母张力<br><br>
+                    <b>使用建议：</b>夏季使用15%比例，冬季使用25%比例以适应环境温度变化。<br><br>
+                    <b>维护方法：</b>每天按相同比例喂养，保持活跃状态。不使用时可冷藏保存，每周喂养1-2次。`,
+                tags: ['酵种', '发酵', '基础'],
+                source: '欧包制作知识库'
+            },
+            '液种': {
+                keywords: ['液种', 'levain', 'liquid starter', '100%水'],
+                category: '酵种',
+                title: '液种（Levain）制作详解',
+                content: `液种是含水量100%的酸种，使用方便且活性强。<br><br>
+                    <b>制作要点：</b><br>
+                    • 比例：老酵头:粉:水 = 1:1:1<br>
+                    • 发酵温度：26-28°C<br>
+                    • 发酵时间：4-6小时至体积2倍以上<br>
+                    • 使用时机：顶端塌陷前为最佳<br><br>
+                    <b>优势：</b><br>
+                    • 混合更均匀，与面团融合性好<br>
+                    • 发酵速度快，时间可控<br>
+                    • 适合快速发酵模式<br><br>
+                    <b>适用场景：</b>常温发酵、短时间制作、需要更多酸味时。`,
+                tags: ['酵种', '发酵', '快速'],
+                source: '欧包制作知识库'
+            },
+
+            // 水解相关
+            '水解': {
+                keywords: ['水解', 'autolyse', '静置', '吸水'],
+                category: '面团处理',
+                title: '水解（Autolyse）原理与实践',
+                content: `水解是面包制作中的重要环节，能让面粉充分吸水。<br><br>
+                    <b>作用：</b><br>
+                    • 软化面筋，降低揉面阻力<br>
+                    • 促进酶活性，提升风味<br>
+                    • 建立初步面筋网络<br>
+                    • 减少揉面时间，保护面筋<br><br>
+                    <b>时间建议：</b><br>
+                    • 高筋面粉：60分钟<br>
+                    • 中筋面粉：30分钟<br>
+                    • 全麦面粉：90分钟（需要更长时间软化麸皮）<br><br>
+                    <b>注意事项：</b>水解时<b>不要放盐和酵头</b>，只将主粉与主加水混合至无干粉即可。`,
+                tags: ['面团处理', '基础', '重要'],
+                source: '欧包制作知识库'
+            },
+
+            // 发酵相关
+            '发酵': {
+                keywords: ['发酵', 'fermentation', '一发', 'bulk fermentation', 'bulk proof'],
+                category: '发酵',
+                title: '发酵（Bulk Fermentation）详解',
+                content: `发酵是面包制作的核心环节，决定了面包的风味和口感。<br><br>
+                    <b>判断方法：</b><br>
+                    1. <b>体积观察：</b>增加50-70%为最佳<br>
+                    2. <b>指压测试：</b>按下后缓慢回弹一半<br>
+                    3. <b>外观观察：</b>表面有细小气泡，面团光滑<br>
+                    4. <b>嗅觉判断：</b>有轻微的酸香和发酵气味<br><br>
+                    <b>环境要求：</b><br>
+                    • 目标面温：24-26°C<br>
+                    • 进行3次拉伸折叠或4-6次线圈折叠<br>
+                    • 避免过度发酵，会导致酸度过高和口感粗糙<br><br>
+                    <b>时间参考：</b><br>
+                    • 常温发酵：3-5小时<br>
+                    • 冷藏发酵：12-24小时<br>
+                    • 夏季高温：2-3小时<br>
+                    • 冬季低温：4-6小时`,
+                tags: ['发酵', '核心', '重要'],
+                source: '欧包制作知识库'
+            },
+
+            // 折叠技巧
+            '折叠': {
+                keywords: ['折叠', 'fold', 'stretch and fold', 'co fold'],
+                category: '面团处理',
+                title: '折叠技巧详解',
+                content: `<b>折叠是发酵过程中建立面筋的重要手法。</b><br><br>
+                    <b>Stretch & Fold（拉伸折叠）：</b><br>
+                    • 适用：含水量70-80%的面团<br>
+                    • 方法：从上下左右四个方向拉伸折叠<br>
+                    • 频率：每45分钟一次，共3次<br>
+                    • 效果：建立均匀的面筋网络<br><br>
+                    <b>Coil Fold（线圈折叠）：</b><br>
+                    • 适用：含水量≥80%的面团<br>
+                    • 方法：双手插入底部，托起向上翻折<br>
+                    • 频率：每30分钟一次，共4-6次<br>
+                    • 效果：避免面筋断裂，建立核心张力<br><br>
+                    <b>选择建议：</b>面团越湿润，越适合Coil Fold。`,
+                tags: ['面团处理', '技巧', '高含水'],
+                source: '欧包制作知识库'
+            },
+
+            // 割包技巧
+            '割包': {
+                keywords: ['割包', 'scoring', 'score', '割刀'],
+                category: '烘烤',
+                title: '割包（Scoring）技巧全解析',
+                content: `<b>割包是影响面包外观和Oven Spring的关键步骤。</b><br><br>
+                    <b>工具准备：</b><br>
+                    • 割包刀（lame）或锋利刀片<br>
+                    • 刀片角度：与面团成45°<br><br>
+                    <b>割包要点：</b><br>
+                    • 深度：约1cm（深入面团但不过深）<br>
+                    • 角度：45°斜角，不要太垂直<br>
+                    • 速度：快速果断，一刀到位<br>
+                    • 位置：根据设计图案，通常从边缘向中心<br><br>
+                    <b>常见图案：</b><br>
+                    • 单包：一道中心割纹<br>
+                    • 螺旋包：围绕中心的螺旋割纹<br>
+                    • 横包：多条平行割纹<br>
+                    <b>高含水面团特别注意：</b><br>
+                    • 动作要更快更准<br>
+                    • 避免犹豫停顿<br>
+                    • 配合强力蒸汽支持`,
+                tags: ['烘烤', '技巧', '外观'],
+                source: '欧包制作知识库'
+            },
+
+            // 开放式组织
+            '开放式组织': {
+                keywords: ['开放式组织', 'open crumb', '气孔', '组织'],
+                category: '面团处理',
+                title: '开放式组织（Open Crumb）形成原理',
+                content: `<b>开放式组织是优质欧包的标志，体现完美的发酵和烘烤。</b><br><br>
+                    <b>形成要素：</b><br>
+                    1. <b>含水量：</b>≥75%的高含水面团更易形成<br>
+                    2. <b>发酵充分：</b>足够的发酵时间产生二氧化碳<br>
+                    3. <b>面筋强度：</b>强韧的面筋能包裹更多气体<br>
+                    4. <b>烘烤热力：</b>强劲的Oven Spring推动组织展开<br><br>
+                    <b>关键技术：</b><br>
+                    • 使用Coil Fold保护面筋<br>
+                    • 冷藏过夜发酵提升风味<br>
+                    • 割包要浅而快，引导膨胀方向<br>
+                    • 烘烤前20分钟保持高湿度<br><br>
+                    <b>常见问题：</b><br>
+                    • 气孔过大：发酵过度<br>
+                    • 气孔细密：发酵不足或含水量过低<br>
+                    • 底部塌陷：面筋强度不足`,
+                tags: ['面团处理', '进阶', '组织'],
+                source: 'Open Crumb Mastery'
+            },
+
+            // 后加水技术
+            'bassinage': {
+                keywords: ['bassinage', '后加水', '补加水', 'delayed addition', '高水量', '面筋', '面筋结构'],
+                category: '面团处理',
+                title: '后加水技术（Bassinage）- 高水量面筋建立的关键',
+                content: `<b>后加水是处理高含水面团的黄金技术，对于建立强韧面筋至关重要。</b><br><br>
+                    <b>原理：</b><br>
+                    • 先让面团吸收部分水，建立初步面筋<br>
+                    • 再加入剩余水，避免一次性加入导致过度稀释<br>
+                    • 分步补水让面筋逐步适应湿润状态<br><br>
+                    <b>高水量面团的特殊性：</b><br>
+                    • 一次性加入所有水会让面筋过度稀释<br>
+                    • 面筋网络难以形成，面团过于松散<br>
+                    • 揉面困难，容易破坏已有面筋<br><br>
+                    <b>操作方法：</b><br>
+                    1. 水解阶段使用80-90%的水<br>
+                    2. 混合酵头和盐后分次加入剩余水<br>
+                    3. 每加一次等完全吸收再加下一次<br>
+                    4. 观察面团状态，灵活调整<br><br>
+                    <b>适用情况：</b><br>
+                    • 含水量≥80%的面团（必须使用）<br>
+                    • 含水量75-80%的面团（强烈推荐）<br>
+                    • 需要延长揉面时间的情况<br>
+                    • 面粉吸水性强时<br><br>
+                    <b>优势：</b><br>
+                    • 更好建立面筋网络<br>
+                    • 减少揉面时间<br>
+                    • 避免面团过度湿润<br>
+                    • 提升最终成品组织<br>
+                    • 面团更易于操作<br><br>
+                    <b>与折叠技巧配合：</b><br>
+                    • 后加水 + Coil Fold = 完美高含水面团<br>
+                    • 建立强韧面筋，保护组织结构`,
+                tags: ['面团处理', '技巧', '高含水', '面筋'],
+                source: '欧包制作知识库'
+            },
+
+            // 风味提升
+            '风味': {
+                keywords: ['风味', 'flavor', '酸味', '甜味', '复杂度'],
+                category: '风味',
+                title: '面包风味提升策略',
+                content: `<b>风味是优质面包的灵魂，需要精心培养。</b><br><br>
+                    <b>风味来源：</b><br>
+                    1. <b>自然发酵：</b>产生乳酸和醋酸，带来复杂酸味<br>
+                    2. <b>长时间发酵：</b>酵母代谢产生更多风味物质<br>
+                    3. <b>美拉德反应：</b>烘烤产生坚果香和焦糖香<br>
+                    4. <b>面粉选择：</b>优质面粉带来麦香<br><br>
+                    <b>提升方法：</b><br>
+                    • 冷藏过夜发酵，增加酸度深度<br>
+                    • 使用硬种而非液种，降低酸度强度<br>
+                    • 适当提高含水量，增加湿润感<br>
+                    • 烘烤至深琥珀色，提升香气<br><br>
+                    <b>平衡技巧：</b><br>
+                    • 酸度与甜味的平衡<br>
+                    • 发酵时间与风味的平衡<br>
+                    • 烘烤程度与口感的平衡`,
+                tags: ['风味', '进阶', '重要'],
+                source: '欧包制作知识库'
+            },
+
+            // 高水量面团专题
+            '高水量': {
+                keywords: ['高水量', '高含水', 'wet dough', '75%以上', '80%以上', '湿润面团', '极湿面团', 'challenging'],
+                category: '面团处理',
+                title: '高水量面团完整指南',
+                content: `<b>高水量面团（含水量≥75%）是欧包制作的高阶挑战，但能带来极致的组织和风味。</b><br><br>
+                    <b>高水量面团的定义：</b><br>
+                    • 中等含水：70-75%<br>
+                    • 高含水：75-80%<br>
+                    • 极高含水：80-85%（挑战级）<br><br>
+                    <b>核心挑战：</b><br>
+                    • 面筋难以建立和保持<br>
+                    • 面团过于松散，操作困难<br>
+                    • 容易过度发酵<br>
+                    • 入炉前容易摊平<br><br>
+                    <b>建立强韧面筋的关键技术：</b><br><br>
+                    <b>1. 后加水技术（Bassinage）</b><br>
+                    • 水解时只加80-90%的水<br>
+                    • 建立初步面筋后分次加入剩余水<br>
+                    • 让面筋逐步适应湿润状态<br><br>
+                    <b>2. Coil Fold（线圈折叠）</b><br>
+                    • 适合所有高含水面团<br>
+                    • 不拉伸，只翻折，保护面筋<br>
+                    • 每30分钟一次，共4-6次<br>
+                    • 避免常规拉伸导致面筋断裂<br><br>
+                    <b>3. Rubaud揉面法</b><br>
+                    • 适合高含水量的初步揉面<br>
+                    • 手部像螺旋桨一样搅拌<br>
+                    • 引入空气，初步强化连接<br><br>
+                    <b>4. 使用硬种而非液种</b><br>
+                    • 硬种（50%水）更保护面筋结构<br>
+                    • 降低面筋降解速率<br>
+                    • 提供更强的酵母张力<br><br>
+                    <b>5. 充足的水解时间</b><br>
+                    • 高筋面粉：60-90分钟<br>
+                    • 让面粉充分吸水软化<br>
+                    • 降低揉面阻力<br><br>
+                    <b>操作要点：</b><br>
+                    • 面团操作时手上要沾水或油<br>
+                    • 使用刮板辅助，少用手拉扯<br>
+                    • 整形时动作要轻柔迅速<br>
+                    • 烘烤时必须配合强力蒸汽<br><br>
+                    <b>烘烤技巧：</b><br>
+                    • 预热至最高温（250°C+）<br>
+                    • 前20分钟保持高湿度<br>
+                    • 入炉动作要快，防止摊平<br>
+                    • 延长烘烤时间，确保熟透<br><br>
+                    <b>常见问题：</b><br>
+                    • 摊平：面筋强度不足，加强折叠<br>
+                    • 组织密实：发酵不足或折叠不够<br>
+                    • 底部发粘：烘烤时间不足`,
+                tags: ['面团处理', '高含水', '面筋', '进阶', '重要'],
+                source: '欧包制作知识库'
+            },
+
+            // 烘烤技巧
+            '烘烤': {
+                keywords: ['烘烤', 'bake', 'oven', '热风', '蒸汽'],
+                category: '烘烤',
+                title: '烘烤（Baking）全流程解析',
+                content: `<b>烘烤是面包制作的最后环节，也是成败的关键。</b><br><br>
+                    <b>温度设置：</b><br>
+                    • 预热温度：250°C（或烤箱最高温）<br>
+                    • 烘烤温度：前20分钟保持高温<br>
+                    • 降温阶段：降至220°C<br><br>
+                    <b>蒸汽的重要性：</b><br>
+                    • 前期保持高湿度（0-20分钟）<br>
+                    • 蒸汽作用：延缓表皮硬化，促进Oven Spring<br>
+                    • 后期排湿（20分钟后）<br><br>
+                    <b>Oven Spring：</b><br>
+                    • 入炉后快速膨胀是面包成功的标志<br>
+                    • 需要强热力和蒸汽支持<br>
+                    • 持续时间约前10-15分钟<br><br>
+                    <b>判断熟度：</b><br>
+                    • 敲击底部有空洞声<br>
+                    • 内心温度达到95-98°C<br>
+                    • 颜色呈深琥珀色`,
+                tags: ['烘烤', '核心', '重要'],
+                source: '欧包制作知识库'
+            },
+
+            // 面粉选择
+            '面粉': {
+                keywords: ['面粉', 'flour', '蛋白质', '灰分', 'T65', 'T55'],
+                category: '原料',
+                title: '面粉选择指南',
+                content: `<b>面粉是面包的基础，选择合适的面粉至关重要。</b><br><br>
+                    <b>法国面粉分类：</b><br>
+                    • T45：精制白面粉，适合糕点<br>
+                    • T55：标准面包粉，含水量70-75%<br>
+                    • T65：高筋面包粉，含水量80-85%<br>
+                    • T80：半全麦，含水量75-80%<br>
+                    • T110：全麦，含水量70-75%<br><br>
+                    <b>蛋白质含量：</b><br>
+                    • 高筋粉：12-14%蛋白质，适合欧包<br>
+                    • 中筋粉：9-11%蛋白质，适合吐司<br>
+                    • 低筋粉：7-9%蛋白质，适合蛋糕<br><br>
+                    <b>选择建议：</b><br>
+                    • 初学者：T55或T65<br>
+                    • 追求组织：T65<br>
+                    • 追求营养：T80或T110<br>
+                    • 混合使用：不同面粉搭配使用`,
+                tags: ['原料', '基础', '重要'],
+                source: '欧包制作知识库'
+            },
+
+            // 整形技巧
+            '整形': {
+                keywords: ['整形', 'shaping', '圆包', '法棍', '橄榄包'],
+                category: '整形',
+                title: '整形（Shaping）技巧',
+                content: `<b>整形决定了面包的最终形状和组织结构。</b><br>
+                    <b>基本原则：</b><br>
+                    • 保持面筋张力<br>
+                    • 不破坏面团结构<br>
+                    • 排出大块气泡<br>
+                    • 表面紧致光滑<br><br>
+                    <b>常用形状：</b><br>
+                    1. <b>圆包：</b>基础形状，适合初学者<br>
+                    2. <b>法棍：</b>长条形，需要精细操作<br>
+                    3. <b>橄榄包：</b>两头尖，适合筛篮<br>
+                    4. <b>带盖吐司：</b>方形，需要模具<br><br>
+                    <b>技巧要点：</b><br>
+                    • 预整形：松弛20分钟后再正式整形<br>
+                    • 表面张力：通过折叠建立表面张力<br>
+                    • 接口处理：接口要紧闭，防止散开<br>
+                    • 轻柔操作：避免拉扯过度<br><br>
+                    <b>松弛时间：</b><br>
+                    • 预整形后：20-30分钟<br>
+                    • 环境温度：22-24°C<br>
+                    • 过度松弛会失去张力`,
+                tags: ['整形', '技巧', '重要'],
+                source: '欧包制作知识库'
+            },
+
+            // 常见问题
+            '问题': {
+                keywords: ['问题', 'troubleshooting', '失败', '不涨', '塌陷', '酸'],
+                category: '问题解决',
+                title: '常见问题与解决方案',
+                content: `<b>欧包制作中的常见问题及解决方法。</b><br><br>
+                    <b>1. 面包不涨：</b><br>
+                    • 原因：发酵不足、酵母失活<br>
+                    • 解决：检查发酵程度、使用新鲜酵种<br><br>
+                    <b>2. 入炉摊平：</b><br>
+                    • 原因：发酵过度、面筋强度不足<br>
+                    • 解决：控制发酵时间、增强折叠<br><br>
+                    <b>3. 过酸：</b><br>
+                    • 原因：发酵时间过长、温度过高<br>
+                    • 解决：缩短发酵时间、降低温度<br><br>
+                    <b>4. 组织密实：</b><br>
+                    • 原因：含水量过低、发酵不足<br>
+                    • 解决：提高含水量、延长发酵<br><br>
+                    <b>5. 硬皮开裂：</b><br>
+                    • 原因：烘烤时无蒸汽、表皮干燥<br>
+                    • 解决：增加蒸汽、控制湿度<br><br>
+                    <b>6. 底部发白：</b><br>
+                    • 原因：烘烤时底部接触冷源<br>
+                    • 解决：使用石板、调整烤架位置`,
+                tags: ['问题解决', '实用', '重要'],
+                source: '欧包制作知识库'
+            }
+        };
+
+        // 智能问答功能
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                askQuestion();
+            }
+        }
+
+        function quickQuestion(question) {
+            document.getElementById('qaQuestion').value = question;
+            askQuestion();
+        }
+
+        function askQuestion() {
+            const question = document.getElementById('qaQuestion').value.trim();
+            if (!question) {
+                alert('请输入您的问题！');
+                return;
+            }
+
+            // 显示加载状态
+            document.getElementById('qaLoading').style.display = 'block';
+            document.getElementById('qaResult').style.display = 'none';
+
+            // 模拟搜索延迟
+            setTimeout(() => {
+                const result = searchLocalKnowledgeBase(question);
+
+                document.getElementById('qaLoading').style.display = 'none';
+                document.getElementById('qaResult').innerHTML = `
+                    <h4>📖 知识库回答</h4>
+                    <div class="answer-content">${result.answer}</div>
+                    <div class="source">📚 来源: ${result.source} · 相关度: ${result.score}%</div>
+                `;
+                document.getElementById('qaResult').style.display = 'block';
+            }, 500);
+        }
+
+        function searchLocalKnowledgeBase(question) {
+            const lowerQuestion = question.toLowerCase();
+            let bestMatch = null;
+            let bestScore = 0;
+
+            // 将问题分词
+            const questionWords = question.toLowerCase().split(/[\s，。？、！]+/).filter(w => w.length > 0);
+
+            for (const [key, item] of Object.entries(localKnowledgeBase)) {
+                let score = 0;
+
+                // 1. 检查主关键词完全匹配
+                if (lowerQuestion.includes(key)) {
+                    score += 50;
+                }
+
+                // 2. 检查关键词列表匹配
+                for (const keyword of item.keywords) {
+                    if (lowerQuestion.includes(keyword.toLowerCase())) {
+                        score += 30;
+                    }
+                }
+
+                // 3. 检查问题中的词是否出现在内容中
+                for (const word of questionWords) {
+                    if (word.length > 1) {
+                        // 标题匹配
+                        if (item.title.toLowerCase().includes(word)) {
+                            score += 15;
+                        }
+                        // 内容匹配
+                        if (item.content.toLowerCase().includes(word)) {
+                            score += 10;
+                        }
+                        // 类别匹配
+                        if (word === item.category.toLowerCase()) {
+                            score += 20;
+                        }
+                    }
+                }
+
+                // 4. 特殊短语匹配（针对常见问题）
+                const specialPhrases = {
+                    '高水量': ['折叠', 'bassinage', '水解'],
+                    '高含水': ['折叠', 'bassinage'],
+                    '面筋结构': ['折叠', 'bassinage', '水解'],
+                    '建立面筋': ['折叠', 'bassinage'],
+                    '加强面筋': ['折叠', 'bassinage'],
+                    '强筋': ['折叠', 'bassinage']
+                };
+
+                for (const [phrase, relatedKeys] of Object.entries(specialPhrases)) {
+                    if (lowerQuestion.includes(phrase) && relatedKeys.includes(key)) {
+                        score += 40;
+                    }
+                }
+
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMatch = item;
+                }
+            }
+
+            // 如果找到匹配项
+            if (bestMatch && bestScore >= 10) {
+                return {
+                    answer: `<b>${bestMatch.title}</b><br><br>${bestMatch.content}`,
+                    source: bestMatch.source,
+                    score: Math.min(bestScore, 100)
+                };
+            }
+
+            // 没有找到匹配项，返回推荐
+            return {
+                answer: `您的问题："<b>${question}</b>"<br><br>
+                    抱歉，知识库中没有找到完全匹配的内容。<br><br>
+                    <b>建议您：</b><br>
+                    • 尝试更简洁的关键词<br>
+                    • 点击下方的热门问题<br>
+                    • 浏览"知识库浏览"标签页查看完整内容<br>
+                    • 使用以下相关主题：<br>
+                    <br>
+                    <span class="badge">酵种</span>
+                    <span class="badge">发酵</span>
+                    <span class="badge">水解</span>
+                    <span class="badge">折叠</span>
+                    <span class="badge">高水量</span>
+                    <span class="badge">面筋</span>
+                    <span class="badge">割包</span>
+                    <span class="badge">烘烤</span>
+                    <span class="badge">整形</span>
+                    <span class="badge">风味</span>`,
+                source: '推荐阅读',
+                score: 0
+            };
+        }
+
+        // 知识库浏览功能
+        function initKnowledgeBase() {
+            const kbBrowser = document.getElementById('kbBrowser');
+
+            // 按类别组织知识库
+            const categories = {};
+            for (const [key, item] of Object.entries(localKnowledgeBase)) {
+                if (!categories[item.category]) {
+                    categories[item.category] = [];
+                }
+                categories[item.category].push(item);
+            }
+
+            // 生成HTML
+            let html = '';
+            for (const [category, items] of Object.entries(categories)) {
+                html += `
+                    <div class="kb-category">
+                        <div class="kb-category-header" onclick="toggleCategory('${category}')">
+                            <span><b>📁 ${category}</b> (${items.length} 篇)</span>
+                            <span id="${category}-arrow">▼</span>
+                        </div>
+                        <div class="kb-category-content" id="${category}-content">
+                            ${items.map(item => `
+                                <div class="kb-item">
+                                    <div class="kb-item-title">${item.title}</div>
+                                    <div class="kb-item-content">${item.content}</div>
+                                    <div class="kb-tags">
+                                        ${item.tags.map(tag => `<span class="kb-tag">${tag}</span>`).join('')}
+                                    </div>
+                                    <div class="kb-source">📚 来源: ${item.source}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            kbBrowser.innerHTML = html;
+        }
+
+        function toggleCategory(category) {
+            const content = document.getElementById(`${category}-content`);
+            const arrow = document.getElementById(`${category}-arrow`);
+
+            if (content.classList.contains('show')) {
+                content.classList.remove('show');
+                arrow.textContent = '▼';
+            } else {
+                content.classList.add('show');
+                arrow.textContent = '▲';
+            }
+        }
+    </script>
+</body>
+</html>
