@@ -1,0 +1,24 @@
+﻿rag_requirements.txt
+rag_service.py
+RAG系统使用指南.md
+simple_rag_service.py
+start_rag.bat
+start_simple_rag.bat
+start_test_rag.bat
+test_flask.py
+欧包制作.py
+欧包计算器_完整知识库.html
+欧包计算器_本地知识库.html
+欧包计算器1.html
+欧包计算器2.html
+欧包计算器3.html
+deploy - 副本/
+deploy/
+sourdough_making/
+知识库md/
+image/
+知识库/
+*.py
+*.bat
+*.pdf
+*.epub
